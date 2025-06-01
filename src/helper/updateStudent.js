@@ -1,5 +1,3 @@
-import * as JSON from "postcss";
-
 export const updateStudent = async (student) => {
 
     try {
@@ -24,16 +22,3 @@ export const updateStudent = async (student) => {
     }
 
 }
-
-/*Body
-{   "id":"5",
-		"first_name": "Jogre Jose",
-		"last_name": "Castillo",
-		"dni_student": "14",
-		"career": "Civernetica",
-		"sch_year": 2,
-		"scholarship": false,
-		"address": "Uclv morales"
-	}
-
-* */

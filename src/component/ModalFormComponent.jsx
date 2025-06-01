@@ -63,7 +63,7 @@ export const ModalFormComponent = ({state,onValueChange,onSubmit,onClose}) => {
                                 </div>
 
 
-                                <button className="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" onSubmit={onSubmit}>Update
+                                <button className="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" onClick={onSubmit}>Update
                                 </button>
                             </form>
                         </div>

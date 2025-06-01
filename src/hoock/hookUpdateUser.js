@@ -1,8 +1,10 @@
 import {useState} from "react";
+import {updateStudent} from "../helper/updateStudent.js";
 
 export const hookUpdateUser = () => {
 
     const [state, setState] = useState({
+        id: "0",
         first_name: "",
         last_name: "",
         dni_student: "",
@@ -21,17 +23,13 @@ export const hookUpdateUser = () => {
     const onValueChange = ({target}) => {
         if (target.name === "scholarship") {
             const newState = {
-                ...state,
-                [target.name]: target.checked,
-                error: ""
+                ...state, [target.name]: target.checked, error: ""
             }
             setState(newState)
         } else {
 
             const newState = {
-                ...state,
-                [target.name]: target.value,
-                error: ""
+                ...state, [target.name]: target.value, error: ""
             }
             setState(newState)
         }
@@ -54,47 +52,63 @@ export const hookUpdateUser = () => {
             })
         } else if (state.career.length < 1) {
             setState({
-                ...state,
-                isLoading: false,
-                susses: undefined,
-                error: "The student career can not by empty"
+                ...state, isLoading: false, susses: undefined, error: "The student career can not by empty"
             })
         } else if (parseInt(state.sch_year) < 0) {
             setState({
-                ...state,
-                isLoading: false,
-                susses: undefined,
-                error: "The student career year can not by negative"
+                ...state, isLoading: false, susses: undefined, error: "The student career year can not by negative"
             })
         } else {
-            setState({
-                ...state,
-                isLoading: false,
-                susses: true,
-                error: ""
-            })
+            async function onUpdate() {
+                setState({...state, isLoading: true})
+                try {
+                    await updateStudent({
+                        id: state.id,
+                        first_name: state.first_name,
+                        last_name: state.last_name,
+                        dni_student: state.dni_student,
+                        career: state.career,
+                        sch_year: state.sch_year,
+                        scholarship: state.scholarship,
+                        address: state.address
+                    })
+                    setState({
+                        ...state, error: null, susses: true, isOpen: false
+                    })
+                } catch (e) {
+                    setState({
+                        ...state, error: e.message
+                    })
+                } finally {
+                    if (state.susses) {
+                        setState({...state, isLoading: false, susses: null, isOpen: false})
+                    } else {
+                        setState({...state, isLoading: false, susses: null})
+
+                    }
+
+                }
+
+            }
+
+            onUpdate()
         }
 
     }
 
     const onClose = () => {
         setState({
-            ...state,
-            isOpen: false
+            ...state, isOpen: false
         })
     }
 
-    const onOpen = (first_name,
-                    last_name,
-                    dni_student,
-                    career, sch_year,
-                    scholarship,
-                    address
-    ) => {
+    const onOpen = (id, first_name, last_name, dni_student, career, sch_year, scholarship, address) => {
         setState({
             ...state,
+            id: id,
             first_name: first_name,
             last_name: last_name,
+            dni_student: dni_student,
             career: career,
             sch_year: sch_year,
             scholarship: scholarship,

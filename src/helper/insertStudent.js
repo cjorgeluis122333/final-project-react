@@ -1,4 +1,3 @@
-import * as JSON from "postcss";
 
 export const insertStudent = async (student) => {
 
