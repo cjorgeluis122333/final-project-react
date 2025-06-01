@@ -1,16 +1,27 @@
-import React, {Fragment} from "react";
+import React from "react";
 
-export const UserItem = ({student}) => {
+export const UserItem = ({student, onTryUpdate, onTryDelete}) => {
 
-    return (
-        <tr>
+    return (<tr>
             <td>{student.id}</td>
             <td>{student.first_name}</td>
             <td>{student.last_name}</td>
             <td>{student.dni_student}</td>
             <td>{student.career}</td>
             <td>{student.sch_year}</td>
-            <td>{student.scholarship?.toString() ?? "Sin beca"}</td>
+            <td>{student.scholarship?.toString() ?? "true"}</td>
             <td>{student.address}</td>
-        </tr>
-    );}
+            <td onClick={ ()=>
+                onTryUpdate(
+                    student.first_name,
+                    student.last_name,
+                    student.dni_student,
+                    student.career, student.sch_year,
+                    student.scholarship,
+                    student.address
+                )
+            }>
+                <img src="/src/assets/img/autorenew_24dp.png" width={24} alt={"update"}/></td>
+            <td onClick={onTryDelete}><img src="/src/assets/img/error_24dp.png" width={24} alt={"delete"}/></td>
+        </tr>);
+}

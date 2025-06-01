@@ -12,7 +12,7 @@ export const ModalFormComponent = ({state,onValueChange,onSubmit,onClose}) => {
                             <h2 className="fw-bold mb-0 col-11">Update user</h2>
                             <button
                                 type="button" className="btn-close col-1" data-bs-dismiss="modal"
-                                    aria-label="Close" onSubmit={onClose}></button>
+                                    aria-label="Close" onClick={onClose}></button>
                         </div>
 
                         <div className="modal-body p-5 pt-0">
