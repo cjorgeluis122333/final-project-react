@@ -14,7 +14,9 @@ const res = await fetch("http://localhost:8081/api/student/", {
 });
 ```
 
-## 1. Paradigma Imperativo
+## 2. Paradigma Declarativo
+
+Se hace uso del paradigma declarativo al trabajar con React y sus hooks, donde se define qué se quiere mostrar y no cómo mostrarlo. Por ejemplo, al renderizar una lista de componentes basados en datos:
 ```js
 {students.map(student => (
   <UserItem
@@ -25,3 +27,27 @@ const res = await fetch("http://localhost:8081/api/student/", {
   />
 ))}
 ```
+
+Además, se usan hooks como useEffect y useState para describir el comportamiento reactivo del componente sin necesidad de manipular directamente el DOM.
+
+## 3. Paradigma Funcional
+El código reutiliza funciones puras y utiliza conceptos del paradigma funcional como la inmutabilidad del estado.
+```js
+setState({
+  ...state,
+  isLoading: true,
+  error: null
+});
+```
+También se aplican funciones como callbacks, promesas y composición funcional para manejar lógica asincrónica de forma limpia y predecible.
+
+## 4. Modularidad y Abstracción
+El proyecto está estructurado en módulos reutilizables, separados en carpetas como:
+
+/hooks → lógica reutilizable basada en React Hooks
+
+/helper → funciones utilitarias puras
+
+/components → componentes funcionales de React
+
+Esta organización fomenta la separación de responsabilidades, facilita las pruebas unitarias y mejora la mantenibilidad del código
