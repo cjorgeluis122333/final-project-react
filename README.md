@@ -1,33 +1,45 @@
-Informe: Aplicación estudiantil en JavaScript y React – Paradigmas de Programación
-La aplicación presentada para la gestión de estudiantes hace uso combinado de tres paradigmas de programación: imperativo, funcional y asincrónico. Esta integración potencia la legibilidad, mantenimiento y eficiencia del sistema.
+Este proyecto aplica una combinación de paradigmas de programación que permiten una estructura clara, mantenible y funcionalmente rica. A continuación, se detallan los principales paradigmas empleados:
 
-Paradigma Imperativo
-El paradigma imperativo se refleja principalmente en la lógica de control del flujo y manejo de estados dentro de los hooks personalizados y componentes. Por ejemplo, en hookDeleteStudent, se utilizan estructuras como try/catch, if/else, y llamadas secuenciales para indicar paso a paso qué debe hacerse (abrir modal, hacer petición, actualizar estado). También vemos un enfoque imperativo cuando se manipulan directamente objetos de estado con setState para establecer condiciones o respuestas a eventos.
+🧱 1. Paradigma Imperativo
+El enfoque imperativo está presente en la mayoría del código, donde se indica paso a paso cómo se deben realizar las operaciones. Por ejemplo, en funciones como createStudent, deleteStudent, o fetchAllStudent, se definen instrucciones específicas para realizar peticiones HTTP y manejar respuestas.
 
-js
+javascript
 Copy
 Edit
-if (state.first_name.length < 3) {
-setState({...state, error: "The student firstname should has more than 3 character"});
-}
-Paradigma Funcional
-La programación funcional se encuentra en el uso de funciones puras, inmutabilidad y operaciones sobre colecciones. El uso de map para renderizar elementos (students.map(...)) ejemplifica cómo se evita la mutación directa y se construyen nuevos elementos a partir de funciones puras. También, el uso de funciones como useCallback, useEffect, y la separación de lógica en funciones reutilizables (onValueChange, handleCreate, etc.) son prácticas funcionales.
+const res = await fetch("http://localhost:8081/api/student/", {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify(newStudent),
+});
+🔁 2. Paradigma Declarativo
+Se hace uso del paradigma declarativo al trabajar con React y sus hooks, donde se define qué se quiere mostrar y no cómo mostrarlo. Ejemplo: el uso de useEffect, useState y JSX en componentes como UserListApp refleja este enfoque.
 
-js
+jsx
 Copy
 Edit
 {students.map(student => (
-<UserItem key={student.id} student={student} onTryUpdate={onOpen} onTryDelete={onOpenDeleteModal} />
+<UserItem
+key={student.id}
+student={student}
+onTryUpdate={onOpen}
+onTryDelete={onOpenDeleteModal}
+/>
 ))}
-Paradigma Asincrónico
-Este paradigma es fundamental para la interacción con el backend. Todas las funciones que realizan llamadas a la API (fetchAllStudent, deleteStudent, createStudent, updateStudent) están definidas como funciones async, haciendo uso de await para gestionar la ejecución no bloqueante. Esto permite una experiencia fluida sin congelar la interfaz de usuario mientras se esperan respuestas del servidor.
+♻️ 3. Paradigma Funcional
+El código reutiliza funciones puras (sin efectos colaterales) y utiliza conceptos del paradigma funcional como la inmutabilidad del estado (al usar useState y setState con el patrón de copia de objetos).
 
-js
+javascript
 Copy
 Edit
-const response = await fetch("http://localhost:8081/api/student/all");
-Los hooks personalizados también integran asincronía al encapsular funciones como loadStudents o onUpdate, permitiendo que la lógica asincrónica sea reutilizable y limpia.
+setState({
+...state,
+isLoading: true,
+error: null
+});
+También se usan funciones como callbacks y promesas para componer comportamiento asincrónico sin bloquear la ejecución.
 
-Conclusión
-El diseño de esta aplicación demuestra un enfoque moderno e integral de desarrollo en JavaScript, utilizando React. El paradigma imperativo estructura la lógica del control de flujo, el funcional favorece la composición y claridad de componentes y lógica, mientras que el asincrónico gestiona eficientemente las interacciones con la red. Esta combinación de paradigmas hace que la aplicación sea robusta, clara y extensible.
+📦 4. Modularidad y Abstracción
+El código está estructurado en módulos reutilizables (/hooks, /helper, /components) que fomentan la separación de responsabilidades y la reutilización del código. Cada módulo representa una funcionalidad aislada y clara, mejorando la mantenibilidad.
+
+✅ Este enfoque combinado de paradigmas permite que la aplicación sea escalable, mantenible y fácil de probar, alineándose con buenas prácticas modernas en el desarrollo web con React.
 
