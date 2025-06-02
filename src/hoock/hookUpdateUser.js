@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {updateStudent} from "../helper/updateStudent.js";
 
-export const hookUpdateUser = () => {
+export const hookUpdateUser = (handleRetry) => {
 
     const [state, setState] = useState({
         id: "0",
@@ -72,26 +72,26 @@ export const hookUpdateUser = () => {
                         scholarship: state.scholarship,
                         address: state.address
                     })
-                    setState({
-                        ...state, error: null, susses: true, isOpen: false
-                    })
+
+
                 } catch (e) {
                     setState({
                         ...state, error: e.message
                     })
                 } finally {
-                    if (state.susses) {
-                        setState({...state, isLoading: false, susses: null, isOpen: false})
-                    } else {
-                        setState({...state, isLoading: false, susses: null})
-
-                    }
+                    setState({...state, isLoading: false, susses: null})
 
                 }
 
             }
 
-            onUpdate()
+            onUpdate().then(() => {
+                    setState({
+                        ...state, error: null, susses: true, isOpen: false
+                    })
+                    handleRetry()
+                }
+            )
         }
 
     }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {fetchAllStudent} from "../helper/fetchAllStudent.js";
 
 export function useStudents(retryTrigger = 0) {
@@ -10,20 +10,22 @@ export function useStudents(retryTrigger = 0) {
         async function loadStudents() {
             setLoading(true);
             try {
-                const data = await fetchAllStudent();
-                setStudents(data);
-                setError(null);
-                // eslint-disable-next-line no-unused-vars
+                return await fetchAllStudent();
             } catch (err) {
-                setError("We can not connect with the server");
-                setStudents([]);
+                return err.message
             } finally {
                 setLoading(false);
             }
         }
 
-        loadStudents();
+        loadStudents().then(data => {
+            setStudents(data);
+            setError(null);
+        }).catch(error => {
+            setError(error.message)
+            return []
+        })
     }, [retryTrigger]);
 
-    return { students, loading, error };
+    return {students, loading, error};
 }

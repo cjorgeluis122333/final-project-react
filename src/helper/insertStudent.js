@@ -1,4 +1,4 @@
-
+/*
 export const insertStudent = async (student) => {
 
     try {
@@ -22,4 +22,17 @@ export const insertStudent = async (student) => {
         }
     }
 
+}
+*/
+export async function createStudent(newStudent) {
+  const res = await fetch("http://localhost:8081/api/student/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newStudent),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Error ${res.status}: ${text}`);
+  }
+  return await res.json();
 }

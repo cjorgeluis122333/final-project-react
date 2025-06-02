@@ -1,0 +1,29 @@
+.floatingButton {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background-color: #007bff; /* Color azul (Bootstrap primary). Cámbialo si quieres otro color */
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000; /* Para que quede siempre por encima del contenido */
+    transition: background-color 0.2s ease;
+}
+
+.floatingButton:hover {
+    background-color: #0056b3; /* Versión más oscura al hacer hover */
+}
+
+.plusIcon {
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #fff;
+    user-select: none;
+}

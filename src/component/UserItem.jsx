@@ -11,20 +11,10 @@ export const UserItem = ({student, onTryUpdate, onTryDelete}) => {
         <td>{student.sch_year}</td>
         <td>{student.scholarship?.toString() ?? "true"}</td>
         <td>{student.address}</td>
-        <td onClick={() =>
-            onTryUpdate(
-                student.id,
-                student.first_name,
-                student.last_name,
-                student.dni_student,
-                student.career,
-                student.sch_year,
-                student.scholarship,
-                student.address
-            )
-        }>
-            <img src="/src/assets/img/autorenew_24dp.png" width={24} alt={"update"}/></td>
-        <td onClick={()=>onTryDelete(student.dni_student)}><img src="/src/assets/img/error_24dp.png" width={24}
-                                                            alt={"delete"}/></td>
+        <td>
+            <img src="/src/assets/img/autorenew_24dp.png" width={24} alt={"update"}
+                 onClick={() => onTryUpdate(student.id, student.first_name, student.last_name, student.dni_student, student.career, student.sch_year, student.scholarship, student.address)}/>
+        </td>
+        <td><img src="/src/assets/img/error_24dp.png" width={24} alt={"delete"} onClick={() => onTryDelete(student.dni_student)}/></td>
     </tr>);
 }

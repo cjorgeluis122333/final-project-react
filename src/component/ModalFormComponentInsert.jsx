@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 // import style from "../assets/style/modals.css"
-export const ModalFormComponent = ({state, onValueChange, onSubmit, onClose}) => {
+export const ModalFormComponentInsert = ({state, onValueChange, onSubmit, onClose}) => {
     return (
         <Fragment>
             <div className={`modal modal-signin position-static d-block bg-secondary py-5`} tabIndex="-1" role="dialog"
@@ -8,7 +8,7 @@ export const ModalFormComponent = ({state, onValueChange, onSubmit, onClose}) =>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content rounded-5 shadow">
                         <div className="modal-header p-5 pb-4 border-bottom-0 row">
-                            <h2 className="fw-bold mb-0 col-11">Update student</h2>
+                            <h2 className="fw-bold mb-0 col-11">Insert student</h2>
                             <button
                                 type="button" className="btn-close col-1" data-bs-dismiss="modal"
                                 aria-label="Close" onClick={() => onClose()}></button>
@@ -31,7 +31,8 @@ export const ModalFormComponent = ({state, onValueChange, onSubmit, onClose}) =>
                                 </div>
 
                                 <div className="form-floating mb-3">
-                                    <input type="number" className="form-control rounded-4" id="student_DNI" placeholder="Student DNI" name={"dni_student"} value={state.dni_student}
+                                    <input type="number" className="form-control rounded-4" id="student_DNI"
+                                           placeholder="Student DNI" name={"dni_student"} value={state.dni_student}
                                            onChange={onValueChange}/>
                                     <label htmlFor="student_DNI">Student DNI</label>
                                 </div>

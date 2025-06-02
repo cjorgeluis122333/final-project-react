@@ -5,26 +5,35 @@ import {ModalDeleteUser} from "./ModalDeleteUser.jsx";
 import {hookUpdateUser} from "../hoock/hookUpdateUser.js";
 import {useStudents} from "../hoock/hookFetchAllStudent.js";
 import ErrorScreen from "./ErrorScreen.jsx";
+import {FloatingActionButton} from "./FloatingActionButton.jsx";
 import {hookDeleteStudent} from "../hoock/hookDeleteStudent.js";
+import {ModalFormComponentInsert} from "./ModalFormComponentInsert.jsx";
+import {useInsertStudent} from "../hoock/hookInsertStudent.js";
 
 
 export const UserListApp = () => {
-    const [deleteState, onOpenDeleteModal, onCloseDeleteModal, handleDelete] = hookDeleteStudent();
-    const [state, onValueChange, onSubmit, onClose, onOpen] = hookUpdateUser();
-
     const [retryCount, setRetryCount] = useState(0);
-    const {students, loading, error} = useStudents(retryCount);
 
     const handleRetry = useCallback(() => {
         setRetryCount(prev => prev + 1);
     }, []);
+
+
+    const [updateState, onValueChange, onSubmit, onClose, onOpen] = hookUpdateUser(handleRetry);
+
+    const {students, loading, error} = useStudents(retryCount);
+
+    const [deleteState, onOpenDeleteModal, onCloseDeleteModal, handleDelete] = hookDeleteStudent(handleRetry);
+
+    const [insertState, openModalInsert, onValueChangeInsert, closeModalInsert, handleCreate] = useInsertStudent(handleRetry)
+
     if (loading) return <p className="text-center mt-4">Cargando estudiantes...</p>;
     if (error) return <ErrorScreen message={error} onRetry={handleRetry}/>;
 
     return (
         <Fragment>
-            {/* Tabla de usuarios */}
-            {!state.isOpen && !deleteState.openModal && (
+       <h1 className={"display-2 p-2 text-center"}>Student Handler</h1>
+            {!updateState.isOpen && !deleteState.openModal && !insertState.isOpen && (
                 <div className="container">
                     <table className="table table-active table-dark table-hover table-responsive-md">
                         <thead>
@@ -52,18 +61,22 @@ export const UserListApp = () => {
                         ))}
                         </tbody>
                     </table>
+                    <FloatingActionButton onClick={openModalInsert}/>
+
                 </div>
             )}
 
-          
-
-            {state.isOpen && (
+            {updateState.isOpen && (
                 <ModalFormComponent
                     onSubmit={onSubmit}
                     onValueChange={onValueChange}
-                    state={state}
+                    state={updateState}
                     onClose={onClose}
+                    onRefresh={handleRetry}
                 />
+            )}
+            {updateState.error && (
+                <div className="alert alert-danger text-center">{updateState.error}</div>
             )}
 
             {deleteState.openModal && (
@@ -74,6 +87,22 @@ export const UserListApp = () => {
                     error={deleteState.error}
                 />
             )}
+            {deleteState.error && (
+                <div className="alert alert-danger text-center">{deleteState.error}</div>
+            )}
+
+            {insertState.isOpen && (
+                <ModalFormComponentInsert
+                    onValueChange={onValueChangeInsert}
+                    state={insertState}
+                    onSubmit={handleCreate}
+                    onClose={closeModalInsert}
+                />
+            )}
+            {insertState.error && (
+                <div className="alert alert-danger text-center">{insertState.error}</div>
+            )}
+
         </Fragment>
     );
 };
